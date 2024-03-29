@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}{% endblock %}
+{% block links %}{% endblock %}
+{% block content %}
+  <input id="title" placeholder="title"/>
+  <button>submit</button>
+{% endblock %}
+{% block scripts %}
+  <script>
+    $(document).ready(function(){
+      
+      $("button").click(function(){
+        
+      var title = $("#title").val() 
+      var user = {{ user.id }}
+      
+      $.ajax({
+        url:'{% url "post-list" %}',
+        method:'POST',
+        headers:{
+          'X-CSRFToken':'{{ csrf_token }}',
+          'Content-Type':'application/json'
+        },
+        data:JSON.stringify({
+          'title':title,
+          
+        }),
+        success:function(){
+          alert('success')
+        },
+        error:function(){
+          alert('error')
+        }
+      });
+      
+      });
+      
+    });
+  </script>
+{% endblock %}
